@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { ArrowLeft, Edit, Calendar, FileText, Phone, Mail, MapPin, AlertCircle } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowLeft, Edit, Calendar, Phone, Mail, MapPin, AlertCircle } from 'lucide-react';
 import { supabase, Database } from '../../lib/supabase';
 
 type Patient = Database['public']['Tables']['patients']['Row'];
@@ -23,7 +23,6 @@ export function PatientDetails({ patient, onBack, onEdit }: PatientDetailsProps)
 
   const fetchPatientData = async () => {
     try {
-      // Fetch appointments
       const { data: appointmentsData, error: appointmentsError } = await supabase
         .from('appointments')
         .select('*')
@@ -32,7 +31,6 @@ export function PatientDetails({ patient, onBack, onEdit }: PatientDetailsProps)
 
       if (appointmentsError) throw appointmentsError;
 
-      // Fetch medical records
       const { data: recordsData, error: recordsError } = await supabase
         .from('medical_records')
         .select('*')
@@ -55,11 +53,9 @@ export function PatientDetails({ patient, onBack, onEdit }: PatientDetailsProps)
     const birthDate = new Date(dateOfBirth);
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
-    
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
-    
     return age;
   };
 
@@ -95,7 +91,7 @@ export function PatientDetails({ patient, onBack, onEdit }: PatientDetailsProps)
         <div className="lg:col-span-1">
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Patient Information</h2>
-            
+
             <div className="space-y-4">
               {patient.email && (
                 <div className="flex items-center">
@@ -123,8 +119,7 @@ export function PatientDetails({ patient, onBack, onEdit }: PatientDetailsProps)
                   <div>
                     <p className="text-sm text-gray-600">Date of Birth</p>
                     <p className="text-gray-900">
-                      {new Date(patient.date_of_birth).toLocaleDateString()} 
-                      ({calculateAge(patient.date_of_birth)} years old)
+                      {new Date(patient.date_of_birth).toLocaleDateString()} ({calculateAge(patient.date_of_birth)} years old)
                     </p>
                   </div>
                 </div>

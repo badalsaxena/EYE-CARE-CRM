@@ -14,15 +14,15 @@ interface PatientFormProps {
 export function PatientForm({ patient, onSubmit, onCancel }: PatientFormProps) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<PatientInsert>({
-    first_name: patient?.first_name || '',
-    last_name: patient?.last_name || '',
-    email: patient?.email || '',
-    phone: patient?.phone || '',
-    date_of_birth: patient?.date_of_birth || '',
-    address: patient?.address || '',
-    emergency_contact: patient?.emergency_contact || '',
-    insurance_info: patient?.insurance_info || '',
-    medical_history: patient?.medical_history || '',
+    first_name: patient?.first_name ?? '',
+    last_name: patient?.last_name ?? '',
+    email: patient?.email ?? '',
+    phone: patient?.phone ?? '',
+    date_of_birth: patient?.date_of_birth ?? '',
+    address: patient?.address ?? '',
+    emergency_contact: patient?.emergency_contact ?? '',
+    insurance_info: patient?.insurance_info ?? '',
+    medical_history: patient?.medical_history ?? '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -31,19 +31,15 @@ export function PatientForm({ patient, onSubmit, onCancel }: PatientFormProps) {
 
     try {
       if (patient) {
-        // Update existing patient
         const { error } = await supabase
           .from('patients')
           .update(formData)
           .eq('id', patient.id);
-
         if (error) throw error;
       } else {
-        // Create new patient
         const { error } = await supabase
           .from('patients')
           .insert([formData]);
-
         if (error) throw error;
       }
 
@@ -91,7 +87,7 @@ export function PatientForm({ patient, onSubmit, onCancel }: PatientFormProps) {
                 id="first_name"
                 name="first_name"
                 required
-                value={formData.first_name}
+                value={formData.first_name ?? ''}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
               />
@@ -106,7 +102,7 @@ export function PatientForm({ patient, onSubmit, onCancel }: PatientFormProps) {
                 id="last_name"
                 name="last_name"
                 required
-                value={formData.last_name}
+                value={formData.last_name ?? ''}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
               />
@@ -120,7 +116,7 @@ export function PatientForm({ patient, onSubmit, onCancel }: PatientFormProps) {
                 type="email"
                 id="email"
                 name="email"
-                value={formData.email}
+                value={formData.email ?? ''}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
               />
@@ -134,7 +130,7 @@ export function PatientForm({ patient, onSubmit, onCancel }: PatientFormProps) {
                 type="tel"
                 id="phone"
                 name="phone"
-                value={formData.phone}
+                value={formData.phone ?? ''}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
               />
@@ -148,7 +144,7 @@ export function PatientForm({ patient, onSubmit, onCancel }: PatientFormProps) {
                 type="date"
                 id="date_of_birth"
                 name="date_of_birth"
-                value={formData.date_of_birth}
+                value={formData.date_of_birth ?? ''}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
               />
@@ -162,7 +158,7 @@ export function PatientForm({ patient, onSubmit, onCancel }: PatientFormProps) {
                 type="text"
                 id="emergency_contact"
                 name="emergency_contact"
-                value={formData.emergency_contact}
+                value={formData.emergency_contact ?? ''}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
                 placeholder="Name and phone number"
@@ -178,7 +174,7 @@ export function PatientForm({ patient, onSubmit, onCancel }: PatientFormProps) {
               id="address"
               name="address"
               rows={3}
-              value={formData.address}
+              value={formData.address ?? ''}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
             />
@@ -192,7 +188,7 @@ export function PatientForm({ patient, onSubmit, onCancel }: PatientFormProps) {
               id="insurance_info"
               name="insurance_info"
               rows={3}
-              value={formData.insurance_info}
+              value={formData.insurance_info ?? ''}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
               placeholder="Insurance provider, policy number, etc."
@@ -207,7 +203,7 @@ export function PatientForm({ patient, onSubmit, onCancel }: PatientFormProps) {
               id="medical_history"
               name="medical_history"
               rows={4}
-              value={formData.medical_history}
+              value={formData.medical_history ?? ''}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
               placeholder="Previous conditions, allergies, medications, etc."
