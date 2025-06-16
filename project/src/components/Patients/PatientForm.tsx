@@ -44,9 +44,10 @@ export function PatientForm({ patient, onSubmit, onCancel }: PatientFormProps) {
       }
 
       onSubmit();
-    } catch (error) {
-      console.error('Error saving patient:', error);
-      alert('Error saving patient. Please try again.');
+    } catch (error: any) {
+      console.error('Error saving patient:', error.message, error.details, error.hint);
+      alert(`Error saving patient: ${error.message}`);
+
     } finally {
       setLoading(false);
     }
