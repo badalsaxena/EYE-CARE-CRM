@@ -62,7 +62,7 @@ export function AppointmentForm({ appointment, onSubmit, onCancel }: Appointment
 
         if (error) throw error;
       } else {
-        // Create new appointment
+        // Create new appointment 
         const { error } = await supabase
           .from('appointments')
           .insert([appointmentData]);
