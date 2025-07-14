@@ -69,7 +69,6 @@ export function AppointmentForm({ appointment, onSubmit, onCancel }: Appointment
 
         if (error) throw error;
       }
-
       onSubmit();
     } catch (error) {
       console.error('Error saving appointment:', error);
