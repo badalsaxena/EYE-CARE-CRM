@@ -10,6 +10,7 @@ type Appointment = Database['public']['Tables']['appointments']['Row'] & {
   };
 };
 
+
 export function AppointmentList() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
